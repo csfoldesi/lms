@@ -7,6 +7,7 @@ import { TitleForm } from "./_components/title-form";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = await auth();
+  const { courseId } = await params;
 
   if (!userId) {
     return redirect("/");
@@ -14,7 +15,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
 
   const course = await db.course.findUnique({
     where: {
-      id: params.courseId,
+      id: courseId,
     },
   });
 

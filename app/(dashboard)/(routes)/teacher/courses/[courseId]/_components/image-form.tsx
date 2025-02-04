@@ -2,13 +2,9 @@
 
 import * as z from "zod";
 import axios from "axios";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
 import { useState } from "react";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
@@ -29,13 +25,6 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   const router = useRouter();
 
   const toggleEdit = () => setIsEditing((current) => !current);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { imageUrl: initialData?.imageUrl || "" },
-  });
-
-  const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -74,7 +63,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
             <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="realtive aspect-video mt-2">
+          <div className="relative aspect-video mt-2">
             <Image alt="Upload" fill className="object-cover rounded-md" src={initialData.imageUrl!} />
           </div>
         ))}

@@ -9,7 +9,7 @@ const handleAuth = async () => {
   return { userId };
 };
 
-export const fileRouter = {
+export const outFileRouter = {
   courseImage: f({
     image: {
       maxFileSize: "4MB",
@@ -18,7 +18,7 @@ export const fileRouter = {
   })
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
-  courseATtachment: f(["text", "image", "video", "audio", "pdf"])
+  courseAttachment: f(["text", "image", "video", "audio", "pdf"])
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
   chapterVideo: f({
@@ -31,4 +31,4 @@ export const fileRouter = {
     .onUploadComplete(() => {}),
 } satisfies IFileRouter;
 
-export type FileRouter = typeof fileRouter;
+export type OutFileRouter = typeof outFileRouter;

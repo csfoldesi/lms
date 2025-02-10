@@ -5,6 +5,7 @@ import { ArrowLeft, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ChapterTitleForm } from "./_components/chapter-title-form";
+import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 
 const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId: string } }) => {
   const { userId } = await auth();
@@ -17,7 +18,7 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
   const chapter = await db.chapter.findUnique({
     where: {
       id: chapterId,
-      courseId: params.courseId,
+      courseId: courseId,
     },
     include: {
       muxData: true,
@@ -57,6 +58,7 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
             <h2 className="text-xl">Customize your chapter</h2>
           </div>
           <ChapterTitleForm initialData={chapter} courseId={courseId} chapterId={chapterId} />
+          <ChapterDescriptionForm initialData={chapter} courseId={courseId} chapterId={chapterId} />
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Chapter, MuxData } from "@prisma/client";
 import { FileUpload } from "@/components/file-upload";
+import MuxPlayer from "@mux/mux-player-react";
 
 interface CHapterVideoFormProps {
   initialData: Chapter & { muxData?: MuxData | null };
@@ -27,6 +28,7 @@ export const ChapterVideoForm = ({ initialData, courseId, chapterid }: CHapterVi
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     try {
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterid}`, values);
       toast.success("Chapter updated");
@@ -63,7 +65,9 @@ export const ChapterVideoForm = ({ initialData, courseId, chapterid }: CHapterVi
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">Video uploaded</div>
+          <div className="relative aspect-video mt-2">
+            <MuxPlayer playbackId={initialData?.muxData?.playbackId || ""} />
+          </div>
         ))}
       {isEditing && (
         <div>

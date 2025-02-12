@@ -68,13 +68,11 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
             <h2 className="text-xl">Access Settings</h2>
           </div>
           <ChapterAccessForm initialData={chapter} courseId={courseId} chapterId={chapterId} />
-        </div>
-        <div className="space-y-4">
           <div className="flex items-center gap-x-2">
             <IconBadge icon={Video} />
             <h2 className="text-xl">Add a video</h2>
           </div>
-          <ChapterVideoForm courseId={courseId} chapterid={courseId} initialData={chapter} />
+          <ChapterVideoForm courseId={courseId} chapterid={chapterId} initialData={chapter} />
         </div>
       </div>
     </div>

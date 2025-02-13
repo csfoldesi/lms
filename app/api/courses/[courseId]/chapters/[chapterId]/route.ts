@@ -63,6 +63,8 @@ export async function PATCH(request: Request, { params }: { params: { courseId: 
           playbackId: asset.playback_ids?.[0].id,
         },
       });
+
+      // TODO: Delete old video from Uploadthings
     }
 
     return NextResponse.json(chapter);

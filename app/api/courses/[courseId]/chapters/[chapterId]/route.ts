@@ -5,6 +5,82 @@ import Mux from "@mux/mux-node";
 
 const muxClient = new Mux({ tokenId: process.env.MUX_TOKEN_ID, tokenSecret: process.env.MUX_TOKEN_SECRET });
 
+export async function DELETE(request: Request, { params }: { params: { courseId: string; chapterId: string } }) {
+  try {
+    const { userId } = await auth();
+    const { courseId, chapterId } = await params;
+    if (!userId) {
+      return new NextResponse("Unathorized", { status: 401 });
+    }
+
+    const courseOwner = await db.course.findUnique({
+      where: {
+        id: courseId,
+        userId: userId,
+      },
+    });
+    if (!courseOwner) {
+      return new NextResponse("Unathorized", { status: 401 });
+    }
+
+    const chapter = await db.chapter.findUnique({
+      where: {
+        id: chapterId,
+        courseId: courseId,
+      },
+    });
+    if (!chapter) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+
+    if (chapter.videoUrl) {
+      const muxData = await db.muxData.findFirst({
+        where: {
+          chapterId: chapterId,
+        },
+      });
+      if (muxData) {
+        await muxClient.video.assets.delete(muxData.assetId);
+        await db.muxData.delete({
+          where: {
+            id: muxData.id,
+          },
+        });
+      }
+      // TODO: Delete old video from Uploadthings
+    }
+
+    const deletedChapter = await db.chapter.delete({
+      where: {
+        id: chapterId,
+      },
+    });
+
+    // if no published chapters in course, unpublish course
+    const publishedChaptersInCourse = await db.chapter.findMany({
+      where: {
+        courseId: courseId,
+        isPublished: true,
+      },
+    });
+    if (!publishedChaptersInCourse.length) {
+      await db.course.update({
+        where: {
+          id: courseId,
+        },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
+
+    return NextResponse.json(deletedChapter);
+  } catch (error) {
+    console.log("COURSES_ID_DELETE", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
 export async function PATCH(request: Request, { params }: { params: { courseId: string; chapterId: string } }) {
   try {
     const { userId } = await auth();

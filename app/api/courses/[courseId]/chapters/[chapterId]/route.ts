@@ -40,7 +40,12 @@ export async function DELETE(request: Request, { params }: { params: { courseId:
         },
       });
       if (muxData) {
-        await muxClient.video.assets.delete(muxData.assetId);
+        // TODO: Check if asset exists before deleting
+        try {
+          await muxClient.video.assets.delete(muxData.assetId);
+        } catch (error) {
+          console.log("MuxError", error);
+        }
         await db.muxData.delete({
           where: {
             id: muxData.id,
@@ -118,7 +123,12 @@ export async function PATCH(request: Request, { params }: { params: { courseId: 
         },
       });
       if (existingMuxData) {
-        await muxClient.video.assets.delete(existingMuxData.assetId);
+        // TODO: Check if asset exists before deleting
+        try {
+          await muxClient.video.assets.delete(existingMuxData.assetId);
+        } catch (error) {
+          console.log("MuxError", error);
+        }
         await db.muxData.delete({
           where: {
             id: existingMuxData.id,

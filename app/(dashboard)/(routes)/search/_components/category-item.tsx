@@ -16,7 +16,7 @@ export const CategoryItem = ({ label, icon: Icon, value }: CategoryItemProps) =>
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const currentCetegoryId = searchParams.get("category");
+  const currentCetegoryId = searchParams.get("categoryId");
   const currentTitle = searchParams.get("title");
 
   const isSelected = currentCetegoryId === value;
@@ -27,7 +27,7 @@ export const CategoryItem = ({ label, icon: Icon, value }: CategoryItemProps) =>
         url: pathName,
         query: {
           title: currentTitle,
-          category: isSelected ? null : value,
+          categoryId: isSelected ? null : value,
         },
       },
       { skipNull: true, skipEmptyString: true }

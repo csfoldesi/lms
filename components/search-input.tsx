@@ -15,13 +15,13 @@ export const SearchInput = () => {
   const router = useRouter();
   const pathName = usePathname();
 
-  const currentCategory = searchParams.get("category");
+  const currentCategory = searchParams.get("categoryId");
 
   useEffect(() => {
     const url = qs.stringifyUrl(
       {
         url: pathName,
-        query: { category: currentCategory, search: debouncedValue },
+        query: { categoryId: currentCategory, title: debouncedValue },
       },
       { skipEmptyString: true, skipNull: true }
     );

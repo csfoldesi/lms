@@ -29,7 +29,7 @@ const CourseLayout = async ({ children, params }: { children: React.ReactNode; p
           },
         },
         orderBy: {
-          position: "desc",
+          position: "asc",
         },
       },
     },

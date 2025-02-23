@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { fromatPrice } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -30,7 +30,7 @@ export const CourseEnrollButton = ({ courseId, price }: CourseEnrollButtonProps)
 
   return (
     <Button onClick={onClick} disabled={isLoading} className="w-full md:w-auto">
-      Enroll for {fromatPrice(price)}
+      Enroll for {formatPrice(price)}
     </Button>
   );
 };

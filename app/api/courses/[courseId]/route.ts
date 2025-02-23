@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { isTeacher } from "@/lib/teacher";
 import { auth } from "@clerk/nextjs/server";
 import Mux from "@mux/mux-node";
 import { NextResponse } from "next/server";
@@ -8,7 +9,7 @@ const muxClient = new Mux({ tokenId: process.env.MUX_TOKEN_ID, tokenSecret: proc
 export async function DELETE(request: Request, { params }: { params: { courseId: string } }) {
   try {
     const { userId } = await auth();
-    if (!userId) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unathorized", { status: 401 });
     }
 
@@ -61,7 +62,7 @@ export async function DELETE(request: Request, { params }: { params: { courseId:
 export async function PATCH(request: Request, { params }: { params: { courseId: string } }) {
   try {
     const { userId } = await auth();
-    if (!userId) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unathorized", { status: 401 });
     }
 

@@ -31,8 +31,8 @@ export const getAnalytics = async (userId: string) => {
     });
 
     const groupedEranings = groupByCourse(purchases);
-    const data = Object.entries(groupedEranings).map(([courseTitle, total]) => ({
-      courseTitle,
+    const data = Object.entries(groupedEranings).map(([name, total]) => ({
+      name,
       total,
     }));
 

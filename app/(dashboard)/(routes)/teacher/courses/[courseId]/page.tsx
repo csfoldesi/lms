@@ -13,7 +13,7 @@ import { ChaptersForm } from "./_components/chapters-form";
 import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
+const CourseIdPage = async ({ params }: { params: Promise<{ courseId: string }> }) => {
   const { userId } = await auth();
   const { courseId } = await params;
 

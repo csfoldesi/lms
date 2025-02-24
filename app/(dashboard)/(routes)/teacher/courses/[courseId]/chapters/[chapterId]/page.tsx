@@ -11,7 +11,7 @@ import { ChapterVideoForm } from "./_components/chapter-video-form";
 import { Banner } from "@/components/banner";
 import { ChapterActions } from "./_components/chapter-actions";
 
-const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId: string } }) => {
+const ChapterIdPage = async ({ params }: { params: Promise<{ courseId: string; chapterId: string }> }) => {
   const { userId } = await auth();
   if (!userId) {
     return redirect("/");

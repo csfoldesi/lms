@@ -7,6 +7,7 @@ import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { SearchInput } from "./search-input";
 import { isTeacher } from "@/lib/teacher";
+import { Suspense } from "react";
 
 export const NavbarRoutes = () => {
   const { userId } = useAuth();
@@ -20,7 +21,9 @@ export const NavbarRoutes = () => {
     <>
       {isSearchPage && (
         <div className="hidden md:block">
-          <SearchInput />
+          <Suspense>
+            <SearchInput />
+          </Suspense>
         </div>
       )}
       <div className="flex gap-x-2 ml-auto">

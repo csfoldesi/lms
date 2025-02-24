@@ -4,7 +4,10 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 
-export async function DELETE(request: Request, { params }: { params: { courseId: string; attachmentId: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ courseId: string; attachmentId: string }> }
+) {
   try {
     const { userId } = await auth();
     const { courseId, attachmentId } = await params;

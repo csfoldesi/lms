@@ -6,7 +6,10 @@ import { isTeacher } from "@/lib/teacher";
 
 const muxClient = new Mux({ tokenId: process.env.MUX_TOKEN_ID, tokenSecret: process.env.MUX_TOKEN_SECRET });
 
-export async function DELETE(request: Request, { params }: { params: { courseId: string; chapterId: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ courseId: string; chapterId: string }> }
+) {
   try {
     const { userId } = await auth();
     const { courseId, chapterId } = await params;
@@ -91,6 +94,7 @@ export async function PATCH(request: Request, { params }: { params: { courseId: 
   try {
     const { userId } = await auth();
     const { courseId, chapterId } = await params;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isPublished, ...values } = await request.json();
     if (!userId || isTeacher(userId)) {
       return new NextResponse("Unathorized", { status: 401 });

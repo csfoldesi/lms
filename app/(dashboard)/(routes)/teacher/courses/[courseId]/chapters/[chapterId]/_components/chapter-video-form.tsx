@@ -1,6 +1,5 @@
 "use client";
 
-import * as z from "zod";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Pencil, PlusCircle, Video } from "lucide-react";
@@ -17,9 +16,9 @@ interface CHapterVideoFormProps {
   chapterid: string;
 }
 
-const formSchema = z.object({
+/*const formSchema = z.object({
   videoUrl: z.string().min(1),
-});
+});*/
 
 export const ChapterVideoForm = ({ initialData, courseId, chapterid }: CHapterVideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,8 +26,7 @@ export const ChapterVideoForm = ({ initialData, courseId, chapterid }: CHapterVi
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: { videoUrl: string }) => {
     try {
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterid}`, values);
       toast.success("Chapter updated");

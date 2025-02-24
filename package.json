@@ -15,6 +15,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@mux/mux-node": "^9.0.1",
     "@mux/mux-player-react": "^3.2.4",
+    "@next/codemod": "^15.1.7",
     "@prisma/client": "^6.3.0",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-dialog": "^1.1.5",

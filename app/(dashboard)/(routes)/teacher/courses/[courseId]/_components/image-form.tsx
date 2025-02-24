@@ -1,6 +1,5 @@
 "use client";
 
-import * as z from "zod";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { ImageIcon, Pencil, PlusCircle } from "lucide-react";
@@ -16,9 +15,9 @@ interface ImageFormProps {
   courseId: string;
 }
 
-const formSchema = z.object({
+/*const formSchema = z.object({
   imageUrl: z.string().min(1, { message: "Image is required" }),
-});
+});*/
 
 export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +25,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: { imageUrl: string }) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Course updated");

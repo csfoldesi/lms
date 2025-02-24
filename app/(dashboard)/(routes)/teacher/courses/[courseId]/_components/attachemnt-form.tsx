@@ -1,6 +1,5 @@
 "use client";
 
-import * as z from "zod";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { File, Loader2, PlusCircle, X } from "lucide-react";
@@ -15,10 +14,10 @@ interface AttachmentFormProps {
   courseId: string;
 }
 
-const formSchema = z.object({
+/*const formSchema = z.object({
   url: z.string().min(1, { message: "File is required" }),
   name: z.string().min(1, { message: "Name is required" }),
-});
+});*/
 
 export const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +26,7 @@ export const AttachmentForm = ({ initialData, courseId }: AttachmentFormProps) =
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: { url: string; name: string }) => {
     try {
       await axios.post(`/api/courses/${courseId}/attachments`, values);
       toast.success("Course updated");

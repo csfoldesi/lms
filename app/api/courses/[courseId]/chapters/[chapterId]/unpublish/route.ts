@@ -10,7 +10,7 @@ export async function PATCH(
   try {
     const { userId } = await auth();
     const { courseId, chapterId } = await params;
-    if (!userId || isTeacher(userId)) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 

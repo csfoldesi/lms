@@ -13,7 +13,7 @@ export async function DELETE(
   try {
     const { userId } = await auth();
     const { courseId, chapterId } = await params;
-    if (!userId || isTeacher(userId)) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unathorized", { status: 401 });
     }
 
@@ -99,7 +99,7 @@ export async function PATCH(
     const { courseId, chapterId } = await params;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isPublished, ...values } = await request.json();
-    if (!userId || isTeacher(userId)) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unathorized", { status: 401 });
     }
 

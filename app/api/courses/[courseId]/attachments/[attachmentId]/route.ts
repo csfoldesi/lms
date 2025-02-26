@@ -1,13 +1,11 @@
 import { db } from "@/lib/db";
+import { AttachemntsIdParams, CourseIdParams } from "@/lib/params";
 import { isTeacher } from "@/lib/teacher";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ courseId: string; attachmentId: string }> }
-) {
+export async function DELETE(_request: Request, { params }: CourseIdParams & AttachemntsIdParams) {
   try {
     const { userId } = await auth();
     const { courseId, attachmentId } = await params;

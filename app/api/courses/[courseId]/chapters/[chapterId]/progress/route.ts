@@ -1,8 +1,9 @@
 import { db } from "@/lib/db";
+import { ChapterIdParams, CourseIdParams } from "@/lib/params";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function PUT(request: Request, { params }: { params: Promise<{ courseId: string; chapterId: string }> }) {
+export async function PUT(request: Request, { params }: CourseIdParams & ChapterIdParams) {
   try {
     const { userId } = await auth();
     const { chapterId } = await params;

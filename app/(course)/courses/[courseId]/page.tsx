@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
+import { CourseIdParams } from "@/lib/params";
 import { redirect } from "next/navigation";
 
-const CourseIdPage = async ({ params }: { params: Promise<{ courseId: string }> }) => {
+const CourseIdPage = async ({ params }: CourseIdParams) => {
   const { courseId } = await params;
 
   const course = await db.course.findUnique({

@@ -12,8 +12,9 @@ import { AttachmentForm } from "./_components/attachemnt-form";
 import { ChaptersForm } from "./_components/chapters-form";
 import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
+import { CourseIdParams } from "@/lib/params";
 
-const CourseIdPage = async ({ params }: { params: Promise<{ courseId: string }> }) => {
+const CourseIdPage = async ({ params }: CourseIdParams) => {
   const { userId } = await auth();
   const { courseId } = await params;
 

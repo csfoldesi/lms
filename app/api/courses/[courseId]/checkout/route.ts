@@ -1,10 +1,11 @@
 import { db } from "@/lib/db";
+import { CourseIdParams } from "@/lib/params";
 import { stripe } from "@/lib/stripe";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-export async function POST(request: Request, { params }: { params: Promise<{ courseId: string }> }) {
+export async function POST(request: Request, { params }: CourseIdParams) {
   try {
     const user = await currentUser();
     if (!user || !user.id || !user.emailAddresses?.[0]?.emailAddress) {

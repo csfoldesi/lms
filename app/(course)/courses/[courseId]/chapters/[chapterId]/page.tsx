@@ -8,8 +8,9 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
 import { CourseProgressButton } from "./_components/course-progress-button";
+import { ChapterIdParams, CourseIdParams } from "@/lib/params";
 
-const ChapterIdPage = async ({ params }: { params: Promise<{ courseId: string; chapterId: string }> }) => {
+const ChapterIdPage = async ({ params }: CourseIdParams & ChapterIdParams) => {
   const { userId } = await auth();
   if (!userId) return redirect("/");
 

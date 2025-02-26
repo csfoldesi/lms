@@ -3,13 +3,11 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node";
 import { isTeacher } from "@/lib/teacher";
+import { ChapterIdParams, CourseIdParams } from "@/lib/params";
 
 const muxClient = new Mux({ tokenId: process.env.MUX_TOKEN_ID, tokenSecret: process.env.MUX_TOKEN_SECRET });
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ courseId: string; chapterId: string }> }
-) {
+export async function DELETE(request: Request, { params }: CourseIdParams & ChapterIdParams) {
   try {
     const { userId } = await auth();
     const { courseId, chapterId } = await params;
@@ -90,10 +88,7 @@ export async function DELETE(
   }
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: Promise<{ courseId: string; chapterId: string }> }
-) {
+export async function PATCH(request: Request, { params }: CourseIdParams & ChapterIdParams) {
   try {
     const { userId } = await auth();
     const { courseId, chapterId } = await params;

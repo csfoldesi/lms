@@ -12,7 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      afterSignOutUrl={process.env.NEXT_PUBLIC_APP_URL}
+      afterMultiSessionSingleSignOutUrl={process.env.NEXT_PUBLIC_APP_URL}>
       <html lang="en">
         <body className={inter.className}>
           <ToastProvider />

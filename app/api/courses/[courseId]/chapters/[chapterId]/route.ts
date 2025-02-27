@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node";
 import { isTeacher } from "@/lib/teacher";
 import { ChapterIdParams, CourseIdParams } from "@/lib/params";
+import { UTApi } from "uploadthing/server";
 
 const muxClient = new Mux({ tokenId: process.env.MUX_TOKEN_ID, tokenSecret: process.env.MUX_TOKEN_SECRET });
 
@@ -109,6 +110,15 @@ export async function PATCH(request: Request, { params }: CourseIdParams & Chapt
       return new NextResponse("Unathorized", { status: 401 });
     }
 
+    const originalChapter = await db.chapter.findUnique({
+      where: {
+        id: chapterId,
+        courseId: courseId,
+      },
+    });
+
+    const originalVideoUrl = originalChapter?.videoUrl;
+
     const chapter = await db.chapter.update({
       where: {
         id: chapterId,
@@ -153,7 +163,12 @@ export async function PATCH(request: Request, { params }: CourseIdParams & Chapt
         },
       });
 
-      // TODO: Delete old video from Uploadthings
+      // delete old video from Uploadthings
+      if (originalVideoUrl && originalVideoUrl !== chapter.videoUrl) {
+        const key = originalVideoUrl.split("/").pop();
+        const utapi = new UTApi();
+        await utapi.deleteFiles(key!);
+      }
     }
 
     return NextResponse.json(chapter);

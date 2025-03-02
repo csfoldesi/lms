@@ -22,6 +22,7 @@
 ### Backend
 - Next.js
 - Prisma
+- PostgreSQL
 
 ### Integrated 3th party services
 - Clerk auth
